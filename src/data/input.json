@@ -1,0 +1,107 @@
+{
+    "z": {
+        "attempts": 16,
+        "errors": 0,
+        "totalLatencyMs": 10475
+    },
+    "e": {
+        "attempts": 16,
+        "errors": 0,
+        "totalLatencyMs": 3693
+    },
+    "r": {
+        "attempts": 3,
+        "errors": 0,
+        "totalLatencyMs": 292
+    },
+    "o": {
+        "attempts": 14,
+        "errors": 0,
+        "totalLatencyMs": 1979
+    },
+    "n": {
+        "attempts": 6,
+        "errors": 1,
+        "totalLatencyMs": 541
+    },
+    "a": {
+        "attempts": 9,
+        "errors": 0,
+        "totalLatencyMs": 2206
+    },
+    "l": {
+        "attempts": 4,
+        "errors": 0,
+        "totalLatencyMs": 582
+    },
+    "m": {
+        "attempts": 3,
+        "errors": 1,
+        "totalLatencyMs": 431
+    },
+    "i": {
+        "attempts": 9,
+        "errors": 0,
+        "totalLatencyMs": 1956
+    },
+    "c": {
+        "attempts": 1,
+        "errors": 0,
+        "totalLatencyMs": 107
+    },
+    "x": {
+        "attempts": 4,
+        "errors": 1,
+        "totalLatencyMs": 1638
+    },
+    "p": {
+        "attempts": 2,
+        "errors": 0,
+        "totalLatencyMs": 392
+    },
+    "v": {
+        "attempts": 18,
+        "errors": 1,
+        "totalLatencyMs": 43487
+    },
+    "w": {
+        "attempts": 2,
+        "errors": 0,
+        "totalLatencyMs": 483
+    },
+    "s": {
+        "attempts": 3,
+        "errors": 0,
+        "totalLatencyMs": 370
+    },
+    "t": {
+        "attempts": 6,
+        "errors": 0,
+        "totalLatencyMs": 1051
+    },
+    "b": {
+        "attempts": 1,
+        "errors": 0,
+        "totalLatencyMs": 298
+    },
+    "d": {
+        "attempts": 2,
+        "errors": 0,
+        "totalLatencyMs": 396
+    },
+    "g": {
+        "attempts": 1,
+        "errors": 0,
+        "totalLatencyMs": 186
+    },
+    "u": {
+        "attempts": 1,
+        "errors": 0,
+        "totalLatencyMs": 183
+    },
+    "h": {
+        "attempts": 1,
+        "errors": 0,
+        "totalLatencyMs": 118
+    }
+}

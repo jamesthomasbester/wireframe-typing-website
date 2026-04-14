@@ -1,0 +1,40 @@
+.typing-area {
+  min-height: 140px;
+}
+
+.words-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 0.8rem;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  max-height: 120px;
+  overflow: hidden;
+}
+
+.word {
+  display: inline-flex;
+  position: relative;
+  padding: 0 2px;
+}
+
+.word.active {
+  border-bottom: 1px solid var(--dim);
+}
+
+.char {
+  transition: color 0.05s;
+}
+
+.char.dim { color: var(--dim); }
+.char.correct { color: var(--green); }
+.char.wrong { color: var(--red-bright); text-decoration: underline; }
+.char.cursor {
+  color: var(--dim);
+  border-left: 2px solid var(--white);
+  animation: blink 0.8s step-end infinite;
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}

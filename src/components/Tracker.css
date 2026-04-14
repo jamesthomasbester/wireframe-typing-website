@@ -1,0 +1,38 @@
+.tracker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid var(--border);
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+}
+
+.stat-unit {
+  font-size: 1rem;
+  color: var(--dim);
+}
+
+.stat-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.focus-value {
+  color: var(--red-bright);
+  letter-spacing: 0.15em;
+}
