@@ -22,7 +22,7 @@ export const FOCUS_SETS: FocusSet[] = [
   },
 ]
 
-export function getWords(set: FocusSet, count = 30): string[] {
+export function getWords(set: FocusSet, count = 20): string[] {
   const result: string[] = []
   while (result.length < count) {
     result.push(...set.words)

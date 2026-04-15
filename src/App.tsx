@@ -23,6 +23,10 @@ export default function App() {
   const [finished, setFinished] = useState(false)
   const [elapsed, setElapsed] = useState(0)
   const [letterStats, setLetterStats] = useState<LetterStatsMap>(emptyStats)
+  const [aiSummary, setAiSummary] = useState<string | null>(null)
+  const [problematicChars, setProblematicChars] = useState<{ character: string; reason: string }[]>([])
+  const [recommendedWords, setRecommendedWords] = useState<string[]>([])
+  const [analysisLoading, setAnalysisLoading] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const lastKeyTime = useRef<number | null>(null)
@@ -39,6 +43,10 @@ export default function App() {
     setFinished(false)
     setElapsed(0)
     setLetterStats(emptyStats())
+    setAiSummary(null)
+    setProblematicChars([])
+    setRecommendedWords([])
+    setAnalysisLoading(false)
     lastKeyTime.current = null
     inputRef.current?.focus()
   }, [focusIndex])
@@ -117,7 +125,39 @@ export default function App() {
     setTyped(val)
   }, [finished, startTime, words, currentWordIndex, typed])
 
-  useEffect(() => { inputRef.current?.focus() }, [])
+  useEffect(() => {
+    if (!finished) return
+    const postStats = async () => {
+      setAnalysisLoading(true)
+      try {
+        const analysis = await fetch('https://fgn0zm5el5.execute-api.ap-southeast-2.amazonaws.com/prod/analysis', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            characterStats: Object.entries(letterStats).map(([char, s]) => ({
+              char,
+              attempts: s.attempts,
+              errors: s.errors,
+              totalLatencyMs: s.totalLatencyMs,
+            }))
+          })
+        }).then(res => res.json())
+        // Response is a Bedrock converse envelope — extract the JSON from the markdown code block
+        const raw: string = analysis?.output?.message?.content?.[0]?.text ?? ''
+        const match = raw.match(/```json\s*([\s\S]*?)```/)
+        const parsed = match ? JSON.parse(match[1]) : {}
+        setAiSummary(parsed.summary ?? null)
+        setProblematicChars(parsed.problematicCharacters ?? [])
+        setRecommendedWords(parsed.recommendedWords ?? [])
+      } finally {
+        setAnalysisLoading(false)
+      }
+    }
+    postStats()
+  }, [finished])
+
+  // Focus input on mount and whenever a round ends (finished flips false after reset)
+  useEffect(() => { if (!finished) inputRef.current?.focus() }, [finished])
 
   return (
     <div className="app">
@@ -157,7 +197,7 @@ export default function App() {
         autoCorrect="off"
         autoCapitalize="off"
         spellCheck={false}
-        onBlur={() => inputRef.current?.focus()}
+        onBlur={() => { if (!finished) inputRef.current?.focus() }}
       />
 
       {finished && (
@@ -176,7 +216,28 @@ export default function App() {
 
       <Keyboard highlight={nextChar} />
 
-      <AnalysisArea stats={letterStats} />
+      <AnalysisArea
+        stats={letterStats}
+        aiSummary={aiSummary}
+        problematicChars={problematicChars}
+        recommendedWords={recommendedWords}
+        loading={analysisLoading}
+        onUseRecommendedWords={() => {
+          if (recommendedWords.length > 0) {
+            setWords(recommendedWords.slice(0, 30))
+            setTyped('')
+            setCurrentWordIndex(0)
+            setWordStatuses(Array(30).fill('pending'))
+            setStartTime(null)
+            setTotalTyped(0)
+            setTotalErrors(0)
+            setFinished(false)
+            setElapsed(0)
+            lastKeyTime.current = null
+            inputRef.current?.focus()
+          }
+        }}
+      />
     </div>
   )
 }
