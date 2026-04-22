@@ -143,12 +143,11 @@ export default function App() {
           })
         }).then(res => res.json())
         // Response is a Bedrock converse envelope — extract the JSON from the markdown code block
-        const raw: string = analysis?.output?.message?.content?.[0]?.text ?? ''
-        const match = raw.match(/```json\s*([\s\S]*?)```/)
-        const parsed = match ? JSON.parse(match[1]) : {}
-        setAiSummary(parsed.summary ?? null)
-        setProblematicChars(parsed.problematicCharacters ?? [])
-        setRecommendedWords(parsed.recommendedWords ?? [])
+        const raw: string = analysis
+        console.log('AI analysis response', { raw })
+        setAiSummary(raw.summary ?? null)
+        setProblematicChars(raw.problematicCharacters ?? [])
+        setRecommendedWords(raw.recommendedWords ?? [])
       } finally {
         setAnalysisLoading(false)
       }
