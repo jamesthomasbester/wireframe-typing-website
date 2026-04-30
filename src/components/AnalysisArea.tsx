@@ -17,7 +17,6 @@ function getHeat(errorRate: number, latencyRatio: number): number {
 }
 
 export default function AnalysisArea({ stats, aiSummary, problematicChars, recommendedWords, loading, onUseRecommendedWords }: Props) {
-  console.log('AnalysisArea render', { stats, aiSummary, problematicChars, recommendedWords, loading })
   const globalAvg =
     Object.values(stats).reduce((s, v) => s + v.totalLatencyMs / v.attempts, 0) /
     (Object.keys(stats).length || 1)
